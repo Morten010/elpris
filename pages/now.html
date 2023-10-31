@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Prisen - nu</title>
+
+    <!-- start of pwa stuff -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!-- end of pwa stuff -->
+
+    <!-- start of font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- end of font awesome -->
+
+    <!-- start of tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                white: '#EBEBEB',
+                green: '#55EC20',
+                black: "#201E1E",
+                lightBlack: '#27282B',
+                green50: '#F3FFE3',
+                green100: '#E6FFC6',
+                green200: '#D9FFAA',
+                yellow: '#FFFF00',
+                yellow50: '#FFFF66',
+                yellow100: '#FFFF99',
+                yellow200: '#FFFFCC',
+                red: '#FF5500',
+              }
+            }
+          }
+        }
+    </script>
+    <!-- end of tailwind -->
+    <!-- font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        body{
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+    <!-- main js file -->
+    <script src="/js/main.js" defer  type='module'></script>
+    <!-- page js file -->
+    <script src="/js/pages/now.js" defer type='module'></script>
+
+</head>
+<body
+class="bg-lightBlack text-white"
+>
+    
+    <!-- navigation -->
+    <nav
+    class="bg-black px-[30px] py-[10px] flex justify-between items-center"
+    >
+    </nav>
+    <!-- end of navigation -->
+
+    <!-- start of settings -->
+    <div id="setting"></div>
+    <!-- end of settings -->
+
+    <!-- start of app -->
+    <div id="app" class="min-h-[calc(100vh-55px-64px)] px-[30px py-[30px]]">
+    </div>
+    <!-- end of app -->
+
+    <!-- modal -->
+    <div
+    class="min-h-[calc(100vh-55px-64px)] px-[30px] py-[30px] relative hidden"
+    id="modal"
+    >
+    </div>
+    <!-- end of modal -->
+    
+    <!-- start of footer -->
+    <footer
+    class="text-center bg-black px-[30px] py-[20px]"
+    >
+    </footer>
+    <!-- end of footer -->
+
+</body>
+</html>
