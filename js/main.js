@@ -190,14 +190,46 @@ momsElement.addEventListener("click", (e) => {
     window.dispatchEvent( new Event('storage') )
 })
 // for notifications
-notificationElement.addEventListener("click", (e) => {
+notificationElement.addEventListener("click", async (e) => {
     const oldSettings = JSON.parse(localStorage.getItem("settings"))
     const newSettings = {
         ...oldSettings,
         notification: e.target.checked
     }
-    localStorage.setItem("settings", JSON.stringify(newSettings))
-    window.dispatchEvent( new Event('storage') )
+    
+    //ask for notification permission
+    Notification.requestPermission().then(perm => {
+
+        // if Permission denied set check back to false and 
+        // set notification to false in localStorage
+        if(perm === "denied"){
+            notificationElement.checked = false
+            localStorage.setItem("settings", JSON.stringify({
+                ...oldSettings,
+                notification: false
+            }))
+        }else if(perm === "granted"){
+            // if permission granted switch localstorage notification to
+            // opposite
+            localStorage.setItem("settings", JSON.stringify(newSettings))
+            window.dispatchEvent( new Event('storage') )
+            if(e.target.checked === true){
+                new Notification("Notifikationer slået til", {
+                    body: "Du vil nu modtage notifikationer når elpriserne er lavest på dagen.",
+                    icon: "/assets/images/icons/icon-72x72.png",
+                    tag: "notifications turned on msg"
+                })
+            }
+        }else{
+            notificationElement.checked = false
+            notificationElement.checked = false
+            localStorage.setItem("settings", JSON.stringify({
+                ...oldSettings,
+                notification: false
+            }))
+        }
+    })
+    
 })
 // for region
 console.log(regionElement);
