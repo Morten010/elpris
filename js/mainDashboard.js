@@ -66,61 +66,92 @@ const userSettings = JSON.parse(localStorage.getItem("settings"))
 
 // insert modal for settings
 modal.innerHTML = `
-    <h2
-    class="text-3xl text-center"
-    >
-        Indstillinger
-    </h2>
-    
     <div
-    class="flex gap-2 items-center justify-between my-3" 
+    class="bg-lightBlack p-3 py-14 w-[717px] mx-auto rounded-md shadow-lg h-[531px] relative"
     >
-        <h3
-        class="text-xl"
+        <i class="fa-regular fa-circle-xmark absolute top-5 right-5 text-3xl text-green" id="close"></i>
+        <h2
+        class="text-3xl text-center"
         >
-            priser inkl. moms
-        </h3>
-        <label class="relative inline-flex items-center mr-5 cursor-pointer">
-            <input 
-            type="checkbox" 
-            value="" 
-            class="sr-only peer" 
-            id="moms"
-            ${userSettings.moms ? "checked" : ""}
-            >
-            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green/70 dark:peer-focus:ring-green/70 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green/70"></div>
-            <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 sr-only">priser inkl. moms</span>
-        </label>
-    </div>
-    <div
-    class="flex gap-2 items-center justify-between my-3" 
-    >
-        <h3
-        class="text-xl"
+            Indstillinger
+        </h2>
+        
+        <div
+        class="max-w-[300px] mx-auto flex flex-col gap-1 mt-5"
         >
-            laveste pris alarm
-        </h3>
-        <label class="relative inline-flex items-center mr-5 cursor-pointer">
-            <input 
-            type="checkbox" 
-            value="" 
-            class="sr-only peer" 
-            id="notification"
-            ${userSettings.notification ? "checked" : ""}
+            <div
+            class="flex gap-2 items-center justify-between my-3" 
             >
-            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green/70 dark:peer-focus:ring-green/70 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green/70"></div>
-            <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 sr-only">priser inkl. moms</span>
-        </label>
+                <h3
+                class="text-md"
+                >
+                    priser inkl. moms
+                </h3>
+                <label class="relative inline-flex items-center mr-5 cursor-pointer">
+                    <input 
+                    type="checkbox" 
+                    value="" 
+                    class="sr-only peer" 
+                    id="moms"
+                    ${userSettings.moms ? "checked" : ""}
+                    >
+                    <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green/70 dark:peer-focus:ring-green/70 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green/70"></div>
+                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 sr-only">priser inkl. moms</span>
+                </label>
+            </div>
+            <div
+            class="flex gap-2 items-center justify-between my-3" 
+            >
+                <h3
+                class="text-md"
+                >
+                    laveste pris alarm
+                </h3>
+                <label class="relative inline-flex items-center mr-5 cursor-pointer">
+                    <input 
+                    type="checkbox" 
+                    value="" 
+                    class="sr-only peer" 
+                    id="notification"
+                    ${userSettings.notification ? "checked" : ""}
+                    >
+                    <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green/70 dark:peer-focus:ring-green/70 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green/70"></div>
+                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 sr-only">priser inkl. moms</span>
+                </label>
+            </div>
+            <div
+            class="flex gap-2 items-center justify-between my-3" 
+            >
+                <h3
+                class="text-md"
+                >
+                    vælg region
+                </h3>
+                <select 
+                name="region" 
+                id="region"
+                class="bg-black p-2 rounded-md"
+                >
+                    <option value="DK1">Vest for Storebælt</option>
+                    <option value="DK2">Øst for Storebælt</option>
+                </select>
+            </div>
+        </div>
     </div>
-    <select 
-    name="region" 
-    id="region"
-    class="bg-black p-2 rounded-md"
-    >
-        <option value="DK1">Vest for Storebælt</option>
-        <option value="DK2">Øst for Storebælt</option>
-    </select>
 `
+
+const closeButton = document.getElementById("close")
+
+//add event listener to modal close button
+closeButton.addEventListener("click", (e) => {
+    e.stopPropagation()
+
+    if(modal.style.display !== "flex"){
+        modal.style.display = "flex"
+    }else{
+        modal.style.display = "none"
+    }
+})
 
 // settings event listeners
 const momsElement = document.getElementById("moms")
@@ -166,12 +197,10 @@ regionElement.addEventListener("change", (e) => {
 setting.addEventListener("click", () => {
     console.log(modal.style.display)
     
-    if(modal.style.display !== "block"){
-        modal.style.display = "block"
-        app.style.display = "none"
+    if(modal.style.display !== "flex"){
+        modal.style.display = "flex"
     }else{
         modal.style.display = "none"
-        app.style.display = "grid"
     }
 })
 

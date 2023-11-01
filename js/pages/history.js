@@ -35,8 +35,9 @@ const pricesElement = document.getElementById("prices")
 const datePicker = document.getElementById("date")
 
 const fetchData = async (date) => {
-        // set loading state
-        pricesElement.innerHTML = `
+
+    // set loading state
+    pricesElement.innerHTML = `
         <p
         class="text-center font-medium text-green"
         >
@@ -47,8 +48,30 @@ const fetchData = async (date) => {
 
     const choosenDate = new Date(date)
     console.log(choosenDate);
+    //check if choosen date is in the furtue
+    if(choosenDate.getTime() > new Date().getTime()){
+        pricesElement.innerHTML = `
+            <p
+            class="text-center font-medium text-red"
+            >
+                Can't read the future🔮🧙‍♂️
+            </p>
+        `
+        return 
+    }
 
     const data = await fetchPrice(choosenDate, "DK1")
+
+    if(!data){
+        pricesElement.innerHTML = `
+        <p
+        class="text-center font-medium text-red"
+        >
+            Could not get the data
+        </p>
+        `
+        return
+    }
 
     // clear loading state
     pricesElement.innerHTML = ""

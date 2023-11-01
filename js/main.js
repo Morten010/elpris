@@ -97,6 +97,7 @@ console.log(userSettings.region === "DK1");
 console.log(userSettings.region);
 
 // insert footer
+
 footer.innerHTML = `
     alle priser er <span class="text-green">${userSettings.moms ? "inkl." : "eksl."} moms</span> og afgifter. 
 
@@ -153,14 +154,24 @@ modal.innerHTML = `
             <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 sr-only">priser inkl. moms</span>
         </label>
     </div>
-    <select 
-    name="region" 
-    id="region"
-    class="bg-black p-2 rounded-md"
+    <div
+    class="flex gap-2 items-center justify-between my-3 67"
     >
-        <option value="DK1">Vest for Storebælt</option>
-        <option value="DK2">Øst for Storebælt</option>
-    </select>
+        <h3
+        class="text-xl"
+        >
+            Vælg region
+        </h3>
+        <select 
+        name="region" 
+        id="region"
+        class="bg-black p-2 rounded-md"
+        >
+            <option value="" disabled selected>Ændre din region</option>
+            <option value="DK1">Vest for Storebælt</option>
+            <option value="DK2">Øst for Storebælt</option>
+        </select>
+    </div>
 `
 
 // settings event listeners
@@ -189,12 +200,16 @@ notificationElement.addEventListener("click", (e) => {
     window.dispatchEvent( new Event('storage') )
 })
 // for region
+console.log(regionElement);
 regionElement.addEventListener("change", (e) => {
+    console.log("Ran change");
+    
     const oldSettings = JSON.parse(localStorage.getItem("settings"))
     const newSettings = {
         ...oldSettings,
         region: e.target.value
     }
+    console.log(newSettings);
     localStorage.setItem("settings", JSON.stringify(newSettings))
     window.dispatchEvent( new Event('storage') )
 })
@@ -213,3 +228,13 @@ setting.addEventListener("click", () => {
         app.style.display = "block"
     }
 })
+
+addEventListener("storage", (event) => {
+    console.log("Storage changes");
+    const newSettings = JSON.parse(localStorage.getItem("settings"));
+    footer.innerHTML = `
+        alle priser er <span class="text-green">${newSettings.moms ? "inkl." : "eksl."} moms</span> og afgifter. 
+
+        Du vises lige nu priserne for region <span class="text-green">${newSettings.region === "DK1" ? "vest danmark" : "øst danmark"}</span>
+    `
+});
