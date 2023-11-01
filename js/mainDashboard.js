@@ -289,6 +289,8 @@ history.innerHTML= `
     </div>
 `
 
+
+
 const placeClock = (prices) => {
     const {moms} = JSON.parse(localStorage.getItem("settings"))
     const element = document.getElementById("clock")
@@ -366,9 +368,41 @@ const date = document.getElementById("date")
 
 // handle choosen date for history
 date.addEventListener("change", async (e) => {
-    console.log(e.target.value);
-    const chosenDatePrices = await fetchPrice(e.target.value)
-    console.log(chosenDatePrices);
+    // set loading
+    historyPrices.innerHTML = `
+        <p
+        class="text-center font-medium text-green"
+        >
+            Loading...
+        </p>
+    `
+
+    const choosenDate = new Date(e.target.value)
+
+    //check if choosen date is in the furtue
+    if(choosenDate.getTime() > new Date().getTime()){
+        historyPrices.innerHTML = `
+            <p
+            class="text-center font-medium text-red"
+            >
+                Can't read the future🔮🧙‍♂️
+            </p>
+        `
+        return 
+    }
+
+    const chosenDatePrices = await fetchPrice(choosenDate)
+
+    if(!chosenDatePrices){
+        historyPrices.innerHTML = `
+        <p
+        class="text-center font-medium text-red"
+        >
+            Could not get the data
+        </p>
+        `
+        return
+    }
 
     // clear html
     historyPrices.innerHTML = ""
